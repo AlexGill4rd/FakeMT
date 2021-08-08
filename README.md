@@ -5,4 +5,4 @@ I started this project to help myself to make certain things easier.
 The code contains some intelligence and things that make it much easier for me as a server developer.
 
 Everything is made by me and is therefore not allowed to claim that these items are made by you
-If this is done, the guidelines will be shit and there will be later penalties.
+If this is done, the guidelines will not be followed and penalties will be imposed later.
