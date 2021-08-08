@@ -1,5 +1,10 @@
 FoodLore:
   - "&7Officieel &6FakeMT &7Food"
+DefaultLore:
+  - "&8&l&m-------------"
+  - "&7Officieel &6FakeMT &7<category>"
+  - "&7Seizoen &6<season> &7<category>"
+  - "&8&l&m-------------"
 ArmorLore:
   - "&8&l&m-------------"
   - "&7Officieel &6FakeMT &7Armor"
@@ -23,3 +28,4 @@ KitReceived: "&6Je hebt de kit ontvangen!"
 InvalidEnchant: "&cDe opgegeven enchant bestaat niet!"
 AutoenchantSuccesvol: "&6Je hebt automatisch al je items geenchant!"
 ArmorstandEditing: "&cJe kan op dit moment niet interacten met deze armorstand! Deze wordt bewerkt!"
+InvalidNumber: "&cHet opeggeven getal is niet geldig!"

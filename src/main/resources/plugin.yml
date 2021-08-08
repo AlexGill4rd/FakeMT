@@ -10,3 +10,11 @@ commands:
     description: Maak bepaalde kits aan
   autoenchant:
     description: Enchant al de mogelijke items in je inventaris met de gevraagde enchantment
+  links:
+    description: Krijg de nodige informatie over de server te zien
+  fastlore:
+    description: Zet automatisch de lore van een item in je hand
+  fastname:
+    description: Zet automatisch de naam van een item in je hand
+  alert:
+    description: Verzend een broadcast naar de complete server

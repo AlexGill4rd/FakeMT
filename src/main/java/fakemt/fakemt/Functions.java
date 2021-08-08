@@ -2,20 +2,16 @@ package fakemt.fakemt;
 
 import fakemt.fakemt.Head.Configs;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.util.StringUtil;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.UUID;
 
 import static fakemt.fakemt.Head.Configs.*;
 
@@ -55,6 +51,17 @@ public class Functions {
         }
         return color;
     }
+    public ItemStack createHead(OfflinePlayer target, String title, ArrayList<String> lore){
+        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
+
+        SkullMeta skull_meta = (SkullMeta) skull.getItemMeta();
+        skull_meta.setOwningPlayer(Bukkit.getOfflinePlayer(target.getUniqueId()));
+        skull_meta.setDisplayName(title);
+        if (lore != null)skull_meta.setLore(lore);
+        skull.setItemMeta(skull_meta);
+
+        return skull;
+    }
     public ArrayList<String> getAnnoyingPeople(){
 
         return getArray("Annoying");
@@ -65,7 +72,7 @@ public class Functions {
         ChatColor color = getItemColor(item);
         if (item.hasItemMeta()){
             if (item.getItemMeta().getDisplayName() != null){
-                String displayname = item.getItemMeta().getDisplayName();
+                String displayname = ChatColor.stripColor(item.getItemMeta().getDisplayName());
                 if (item.getItemMeta().getDisplayName().contains("- ")){
                     displayname = displayname.substring(displayname.indexOf("- ") + 2);
                     displayname = displayname.substring(0, displayname.indexOf(" -"));

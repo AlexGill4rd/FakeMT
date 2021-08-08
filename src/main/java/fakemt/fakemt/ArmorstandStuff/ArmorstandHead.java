@@ -90,16 +90,17 @@ public class ArmorstandHead implements Listener {
                 case 3:
                     if (is.getType() == Material.BARRIER)return;
                     player.getInventory().addItem(e.getInventory().getItem(3));
-                    e.getInventory().setItem(3, functions.createItemstack(Material.BARRIER, "§7Click item", functions.createArraylist("§7Right-Click §7§l- §8Set de armorstand tool")));
+                    e.getInventory().setItem(3, getToolItemstackRaw());
                     showAccept(inventory);
                     break;
                 case 4:
                     if (is.getType() == Material.BARRIER)return;
                     player.getInventory().addItem(e.getInventory().getItem(4));
-                    e.getInventory().setItem(4, functions.createItemstack(Material.BARRIER, "§7Click item", functions.createArraylist("§3Left-Click §7§l- §8Set de armorstand head")));
+                    e.getInventory().setItem(4, getHeadItemstackRaw());
                     showAccept(inventory);
                     break;
                 case 8:
+                    if (is.getType() != Material.GREEN_SHULKER_BOX)return;
                     if (e.getInventory().getItem(4).getType() != Material.BARRIER){
                         ItemStack clone = e.getInventory().getItem(4).clone();
                         clone.setAmount(1);
@@ -126,11 +127,14 @@ public class ArmorstandHead implements Listener {
         if (invnaam.equals("§7§l* §6Armorstand Editor §7§l*")){
             ArmorStand armorStand = editor.get(player.getUniqueId());
             if (editor.containsKey(player.getUniqueId())){
+                if (!e.getInventory().getItem(3).equals(armorStand.getItemInHand())){
+                    player.getInventory().removeItem(armorStand.getItemInHand());
+                    if (e.getInventory().getItem(3).getType() != Material.BARRIER) player.getInventory().addItem(e.getInventory().getItem(3));
+                    e.getInventory().setItem(4, null);
+                }
                 if (!e.getInventory().getItem(4).equals(armorStand.getHelmet())){
                     player.getInventory().removeItem(armorStand.getHelmet());
-
-                }else if (!e.getInventory().getItem(3).equals(armorStand.getItemInHand())){
-                    player.getInventory().removeItem(armorStand.getItemInHand());
+                    if (e.getInventory().getItem(4).getType() != Material.BARRIER) player.getInventory().addItem(e.getInventory().getItem(4));
                 }
                 armorStand.setCustomName(" ");
                 editor.remove(player.getUniqueId());
@@ -146,10 +150,10 @@ public class ArmorstandHead implements Listener {
         ItemStack tool;
 
         if (armorStand.getHelmet().getType() != Material.AIR) helm = armorStand.getHelmet();
-        else helm = functions.createItemstack(Material.BARRIER, "§7§l- §6Verander Helm §7§l-", functions.createArraylist("§7Verander het item dat de armorstand", "§7op zijn hoofd heeft"));
+        else helm = getHeadItemstackRaw();
 
         if (armorStand.getItemInHand().getType() != Material.AIR) tool = armorStand.getItemInHand();
-        else tool = functions.createItemstack(Material.BARRIER, "§7§l- §6Verander Tool §7§l-", functions.createArraylist("§7Verander de tool dat de armorstand", "§7in zijn hand vasthoudt"));
+        else tool = getToolItemstackRaw();
 
         inventory.setItem(5, functions.createItemstack(Material.ARMOR_STAND, "§6Small §7(§f" + StringUtils.capitalize(String.valueOf(armorStand.isSmall()).toLowerCase()) + "§7)", functions.createArraylist("§7Left-Click §7§l- §8Toggle armorstand size")));
         inventory.setItem(4, helm);
@@ -160,7 +164,7 @@ public class ArmorstandHead implements Listener {
 
         player.openInventory(inventory);
     }
-    private void showAccept(Inventory inventory){
-        inventory.setItem(8, functions.createItemstack(Material.GREEN_SHULKER_BOX, "§a§aAccepteer", functions.createArraylist("§8Bij klikken op de knop wordt de", "§8tool van de armorstand verandert!")));
-    }
+    private void showAccept(Inventory inventory){inventory.setItem(8, functions.createItemstack(Material.GREEN_SHULKER_BOX, "§a§aAccepteer", functions.createArraylist("§8Bij klikken op de knop wordt de", "§8tool van de armorstand verandert!")));}
+    private ItemStack getHeadItemstackRaw(){return functions.createItemstack(Material.BARRIER, "§7§l- §6Verander Helm §7§l-", functions.createArraylist("§7Verander het item dat de armorstand", "§7op zijn hoofd heeft"));}
+    private ItemStack getToolItemstackRaw(){return functions.createItemstack(Material.BARRIER, "§7§l- §6Verander Tool §7§l-", functions.createArraylist("§7Verander de tool dat de armorstand", "§7in zijn hand vasthoudt"));}
 }

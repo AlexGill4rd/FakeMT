@@ -17,6 +17,7 @@ public class BottleStacker implements Listener {
             ItemStack cursor = player.getItemOnCursor();
             ItemStack cursorClone = player.getItemOnCursor().clone();
             cursorClone.setAmount(1);
+
             if (e.getAction() == InventoryAction.COLLECT_TO_CURSOR){
                 e.setCancelled(true);
                 for (ItemStack item : player.getInventory()){
