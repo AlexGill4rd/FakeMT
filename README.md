@@ -1,4 +1,4 @@
-# FakeMT
+# FakeMT Extra Features
 💼This project brings a lot of new additions to my Minecraft Server. The complete project consists of Java and is self-made.
 
 I started this project to help myself to make certain things easier.
