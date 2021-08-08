@@ -1,0 +1,25 @@
+FoodLore:
+  - "&7Officieel &6FakeMT &7Food"
+ArmorLore:
+  - "&8&l&m-------------"
+  - "&7Officieel &6FakeMT &7Armor"
+  - "&7Seizoen &61 &7Armor"
+  - "&8&l&m-------------"
+IllegalLore:
+  - "&8&l&m-------------"
+  - "&7Officieel &6FakeMT &7Illegal"
+  - "&7Dit item is niet toegestaan!"
+  - "&8&l&m-------------"
+DrugLore:
+  - "&7Officieel &6FakeMT &7Drug"
+Annoying:
+  - "e261e848-ddf9-456c-93f7-66ad2a8d7ce7"
+No permissions: "&4Je hebt geen toestemming om deze functie te gebruiken!"
+DoubleKit: "&cDeze kit bestaat al!"
+KitCreated: "&6Je hebt deze kit aangemaakt!"
+DefaultKitCreated: "&6Je hebt de default kit aangemaakt!"
+InvalidKit: "&cDe opgegeven kit bestaat niet!"
+KitReceived: "&6Je hebt de kit ontvangen!"
+InvalidEnchant: "&cDe opgegeven enchant bestaat niet!"
+AutoenchantSuccesvol: "&6Je hebt automatisch al je items geenchant!"
+ArmorstandEditing: "&cJe kan op dit moment niet interacten met deze armorstand! Deze wordt bewerkt!"

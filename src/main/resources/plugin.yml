@@ -1,0 +1,12 @@
+name: FakeMT
+version: ${project.version}
+main: fakemt.fakemt.FakeMT
+authors: [ KingDev ]
+description: Plugin die de FakeMT server van handig/leukigheid voorzien
+commands:
+  autolore:
+    description: Geef al de items in je inventaris een gepaste lore
+  kit:
+    description: Maak bepaalde kits aan
+  autoenchant:
+    description: Enchant al de mogelijke items in je inventaris met de gevraagde enchantment
