@@ -41,6 +41,7 @@ public class ArmorstandHead implements Listener {
                     e.setCancelled(true);
                 }
             }else{
+                if (armorStand.getCustomName() == null)return;
                 if (armorStand.getCustomName().equals("Editing...")){
                     e.setCancelled(true);
                     player.sendMessage(functions.getMessage("ArmorstandEditing"));

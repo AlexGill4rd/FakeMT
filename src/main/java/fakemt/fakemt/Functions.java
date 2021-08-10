@@ -86,22 +86,6 @@ public class Functions {
         }
         return itemname;
     }
-    public boolean isDrug(ItemStack item){
-        String itemtype = item.getType().toString().toLowerCase();
-        String itemname = "";
-        if (item.hasItemMeta()){
-            if (item.getItemMeta().getDisplayName() != null){
-                itemname = item.getItemMeta().getDisplayName().toLowerCase();
-            }
-        }
-        return itemname.contains("drakenvlees") ||
-                itemname.contains("eenhoornvlees") ||
-                itemname.contains("coca") ||
-                itemname.contains("wiet") ||
-                itemname.contains("vitamine") ||
-                itemname.contains("knuppel") ||
-                itemname.contains("eye");
-    }
     FakeMT plugin = FakeMT.getPlugin(FakeMT.class);
 
     public String color(String s){
@@ -129,7 +113,7 @@ public class Functions {
     public ItemStack editItemMeta(ItemStack stack, String displayname, ArrayList<String> lore){
         ItemStack newItem = stack.clone();
         ItemMeta meta = newItem.getItemMeta();;
-        if (displayname != null)meta.setDisplayName(displayname);
+        if (displayname != null)meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayname));
         if (lore != null)meta.setLore(lore);
         newItem.setItemMeta(meta);
         return newItem;
@@ -167,8 +151,8 @@ public class Functions {
     public boolean hasJoinedBefore(Player player){
         return Configs.getCustomConfig3().contains("Players." + player.getUniqueId().toString());
     }
-    public boolean hasPerm(Player player, String perm){
-        if (player.hasPermission(perm)) return true;
+    public boolean hasPerm(Player player, String permission){
+        if (player.hasPermission(permission)) return true;
         player.sendMessage(getMessage("No permissions"));
         return false;
     }

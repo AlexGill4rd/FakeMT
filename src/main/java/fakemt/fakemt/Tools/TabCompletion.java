@@ -25,6 +25,15 @@ public class TabCompletion implements TabCompleter {
                 return possible;
 
             }
+        }else if (command.getName().equalsIgnoreCase("itemedit")){
+            if (args.length == 1){
+                ArrayList<String> possible = new ArrayList<>();
+                possible.add("lore");
+                possible.add("name");
+                possible.add("durability");
+                possible.removeIf(s -> !s.startsWith(args[0]));
+                return possible;
+            }
         }
         return null;
     }

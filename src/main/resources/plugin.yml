@@ -12,9 +12,7 @@ commands:
     description: Enchant al de mogelijke items in je inventaris met de gevraagde enchantment
   links:
     description: Krijg de nodige informatie over de server te zien
-  fastlore:
-    description: Zet automatisch de lore van een item in je hand
-  fastname:
-    description: Zet automatisch de naam van een item in je hand
+  itemedit:
+    description: Bewerk al de eigenschappen van een item
   alert:
     description: Verzend een broadcast naar de complete server

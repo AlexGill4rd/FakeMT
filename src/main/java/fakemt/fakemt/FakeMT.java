@@ -34,13 +34,14 @@ public final class FakeMT extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InformationTab(), this);
 
         getCommand("alert").setExecutor(new Alert());
-        getCommand("fastname").setExecutor(new FastItemEdit());
-        getCommand("fastlore").setExecutor(new FastItemEdit());
+        getCommand("itemedit").setExecutor(new FastItemEdit());
         getCommand("links").setExecutor(new InformationTab());
         getCommand("autolore").setExecutor(new AutoLore());
         getCommand("kit").setExecutor(new AutoKit());
         getCommand("autoenchant").setExecutor(new AutoEnchant());
+
         getCommand("autoenchant").setTabCompleter(new TabCompletion());
+        getCommand("itemedit").setTabCompleter(new TabCompletion());
     }
 
     @Override
