@@ -16,3 +16,5 @@ commands:
     description: Bewerk al de eigenschappen van een item
   alert:
     description: Verzend een broadcast naar de complete server
+  pet:
+    description: Spawn nu voor een persoon een bepaald huisdier in

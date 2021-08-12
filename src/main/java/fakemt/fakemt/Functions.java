@@ -3,6 +3,7 @@ package fakemt.fakemt;
 import fakemt.fakemt.Head.Configs;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -118,6 +119,13 @@ public class Functions {
         newItem.setItemMeta(meta);
         return newItem;
     }
+    public void saveHuisdierData(){
+        try {
+            Configs.getCustomConfig4().save(customConfigFile4);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public boolean isInt(String s) {
         try {
             Integer.parseInt(s);
@@ -125,6 +133,27 @@ public class Functions {
             return false;
         }
         return true;
+    }
+    public ArrayList<EntityType> getAllEntityTypes(){
+        ArrayList<EntityType> entityTypes = new ArrayList<>();
+        for (EntityType entityType : EntityType.values()){
+            if (entityType.isAlive()){
+                if (invalidEntities().contains(entityType))continue;
+                entityTypes.add(entityType);
+            }
+        }
+        return entityTypes;
+    }
+    public ArrayList<EntityType> invalidEntities(){
+        ArrayList<EntityType> disabled = new ArrayList<>();
+        disabled.add(EntityType.PLAYER);
+        disabled.add(EntityType.EVOKER);
+        disabled.add(EntityType.VINDICATOR);
+        disabled.add(EntityType.ILLUSIONER);
+        disabled.add(EntityType.ARMOR_STAND);
+        disabled.add(EntityType.ITEM_FRAME);
+        disabled.add(EntityType.GHAST);
+        return disabled;
     }
     public boolean isDouble(String s) {
         try {

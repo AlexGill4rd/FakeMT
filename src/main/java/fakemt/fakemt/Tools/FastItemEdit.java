@@ -36,6 +36,13 @@ public class FastItemEdit implements CommandExecutor {
                                 player.sendMessage(functions.getMessage("EditLore"));
                             }else player.sendMessage(functions.getMessage("InvalidItem"));
                         }
+                    }else if (args[0].equalsIgnoreCase("name")){
+                        if (functions.hasPerm(player, "edititem.name")){
+                            if (isValidItem(player.getInventory().getItemInMainHand())){
+                                setItemDisplayname(player, player.getInventory().getItemInMainHand(), functions.getItemName(player.getInventory().getItemInMainHand()));
+                                player.sendMessage(functions.getMessage("EditDisplayname"));
+                            }else player.sendMessage(functions.getMessage("InvalidItem"));
+                        }
                     }
                 }else if (args.length == 2){
                     if (args[0].equalsIgnoreCase("lore")){
