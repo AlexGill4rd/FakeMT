@@ -131,7 +131,7 @@ public class ArmorstandHead implements Listener {
                 if (!e.getInventory().getItem(3).equals(armorStand.getItemInHand())){
                     player.getInventory().removeItem(armorStand.getItemInHand());
                     if (e.getInventory().getItem(3).getType() != Material.BARRIER) player.getInventory().addItem(e.getInventory().getItem(3));
-                    e.getInventory().setItem(4, null);
+                    e.getInventory().setItem(3, null);
                 }
                 if (!e.getInventory().getItem(4).equals(armorStand.getHelmet())){
                     player.getInventory().removeItem(armorStand.getHelmet());

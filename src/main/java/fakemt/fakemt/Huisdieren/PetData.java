@@ -3,13 +3,15 @@ package fakemt.fakemt.Huisdieren;
 import fakemt.fakemt.FakeMT;
 import fakemt.fakemt.Functions;
 import fakemt.fakemt.Head.Configs;
-import net.minecraft.server.v1_12_R1.EntityInsentient;
+import net.minecraft.server.v1_12_R1.*;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -46,6 +48,23 @@ public class PetData {
         spawnPet.setCustomName(pet.getName());
         spawnPet.setInvulnerable(true);
         spawnPet.setSilent(true);
+        spawnPet.setGlowing(pet.hasGlow());
+        if (spawnPet instanceof Sheep){
+            Sheep sheep = (Sheep) spawnPet;
+            sheep.setColor(DyeColor.valueOf(pet.getPetcolor()));
+            if (pet.isBaby())sheep.setBaby();
+            else sheep.setAdult();
+            sheep.setSheared(pet.isSheared());
+        }else if (spawnPet instanceof Parrot){
+            Parrot parrot = (Parrot) spawnPet;
+            parrot.setVariant(Parrot.Variant.valueOf(pet.getVariant()));
+            if (pet.isBaby())parrot.setBaby();
+            else parrot.setAdult();
+        }else if (spawnPet instanceof Creeper){
+            Creeper creeper = (Creeper) spawnPet;
+            creeper.setPowered(false);
+            creeper.setExplosionRadius(0);
+        }
         followPlayer(owner, (LivingEntity) spawnPet, 1.75);
         pets.put(owner.getUniqueId(), spawnPet);
     }
@@ -80,6 +99,18 @@ public class PetData {
         if (getPets().contains(pet))return;
         Configs.getCustomConfig4().set("Pets." + player.getUniqueId().toString() + "." + pet.getEntityType().name() + ".Name", ChatColor.translateAlternateColorCodes('&', name));
         Configs.getCustomConfig4().set("Pets." + player.getUniqueId().toString() + "." + pet.getEntityType().name() + ".IsActive", false);
+        Configs.getCustomConfig4().set("Pets." + player.getUniqueId().toString() + "." + pet.getEntityType().name() + ".Glow", false);
+        switch (pet.getEntityType()) {
+            case SHEEP:
+                Configs.getCustomConfig4().set("Pets." + pet.getOwner().getUniqueId().toString() + "." + pet.getEntityType().name() + ".PetColor", DyeColor.WHITE.name());
+                Configs.getCustomConfig4().set("Pets." + pet.getOwner().getUniqueId().toString() + "." + pet.getEntityType().name() + ".Sheared", false);
+                Configs.getCustomConfig4().set("Pets." + pet.getOwner().getUniqueId().toString() + "." + pet.getEntityType().name() + ".IsBaby", false);
+                break;
+            case PARROT:
+                Configs.getCustomConfig4().set("Pets." + pet.getOwner().getUniqueId().toString() + "." + pet.getEntityType().name() + ".Variant", Parrot.Variant.BLUE.name());
+                Configs.getCustomConfig4().set("Pets." + pet.getOwner().getUniqueId().toString() + "." + pet.getEntityType().name() + ".IsBaby", false);
+                break;
+        }
         functions.saveHuisdierData();
     }
     public boolean hasPet(EntityType petType){ return Configs.getCustomConfig4().contains("Pets." + player.getUniqueId().toString() + "." + petType.name()); }

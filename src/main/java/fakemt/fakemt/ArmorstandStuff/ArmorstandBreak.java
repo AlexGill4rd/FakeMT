@@ -17,12 +17,14 @@ public class ArmorstandBreak implements Listener {
     @EventHandler
     public void onArmorstandBreak(EntityDamageByEntityEvent e){
 
-        Player player = (Player) e.getDamager();
-        Entity damaged = e.getEntity();
-        if (damaged instanceof ArmorStand){
-            ArmorStand armorStand = (ArmorStand) damaged;
-            if (player.getGameMode() == GameMode.CREATIVE){
-                for (ItemStack item : getArmorstandLoot(armorStand))player.getInventory().addItem(item);
+        if (e.getDamager() instanceof Player){
+            Player player = (Player) e.getDamager();
+            Entity damaged = e.getEntity();
+            if (damaged instanceof ArmorStand){
+                ArmorStand armorStand = (ArmorStand) damaged;
+                if (player.getGameMode() == GameMode.CREATIVE){
+                    for (ItemStack item : getArmorstandLoot(armorStand))player.getInventory().addItem(item);
+                }
             }
         }
     }
