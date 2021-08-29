@@ -1,5 +1,6 @@
 package fakemt.fakemt.Huisdieren;
 
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,14 +16,14 @@ public class PetInteractEvent implements Listener {
             Player player = (Player) e.getDamager();
             if (!(e.getEntity() instanceof Player)){
                 Entity damaged = e.getEntity();
-                if (!damaged.getCustomName().equals("")) {
-                    e.setCancelled(true);
+                if (damaged instanceof ArmorStand)return;
+                if (damaged.getCustomName() != null){
+                    if (!damaged.getCustomName().equals("")) {
+                        e.setCancelled(true);
+                    }
                 }
-
             }
         }
-
-
     }
 
 }

@@ -10,6 +10,7 @@ import fakemt.fakemt.Automatisation.AutoRemover;
 import fakemt.fakemt.Huisdieren.*;
 import fakemt.fakemt.Tools.*;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -23,10 +24,14 @@ import static fakemt.fakemt.Head.Configs.*;
 public final class FakeMT extends JavaPlugin implements Listener {
 
     public static HashMap<UUID, Entity> pets = new HashMap<>();
+    public static String servername;
+    public static int season;
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        servername = ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("ServerName"));
+        season = this.getConfig().getInt("Season");
+
         createCustomConfig1();
         createCustomConfig2();
         createCustomConfig3();
@@ -49,6 +54,7 @@ public final class FakeMT extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new JoinPetSpawn(), this);
 
         getCommand("pet").setExecutor(new PetCommand());
+        getCommand("fakemt").setExecutor(new FakeMTCommand());
         getCommand("alert").setExecutor(new Alert());
         getCommand("itemedit").setExecutor(new FastItemEdit());
         getCommand("links").setExecutor(new InformationTab());

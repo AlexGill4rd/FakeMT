@@ -10,6 +10,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
+import static fakemt.fakemt.FakeMT.servername;
+
 public class AutoEnchant implements CommandExecutor {
     Functions functions = new Functions();
     @Override
@@ -21,7 +23,7 @@ public class AutoEnchant implements CommandExecutor {
                 Player player = (Player) sender;
 
                 if (args.length == 1) {
-                    if (functions.hasPerm(player, "autoenchant.enchant")){
+                    if (functions.hasPerm(player, servername + ".autoenchant")){
                         String enchantment = args[0].toUpperCase();
                         Enchantment enchant = Enchantment.getByName(enchantment);
                         ItemStack[] playerinventory = player.getInventory().getContents();
@@ -54,8 +56,11 @@ public class AutoEnchant implements CommandExecutor {
                                 Random r = new Random();
                                 random = r.nextInt(enchant.getMaxLevel()) + 1;
                             }
-
-                            item.addEnchantment(enchant, random);
+                            try {
+                                item.addEnchantment(enchant, random);
+                            }catch (IllegalArgumentException error){
+                                continue;
+                            }
                             if (item.hasItemMeta()){
                                 if (item.getItemMeta().getDisplayName() != null)previous = item.getItemMeta().getDisplayName();
                             }

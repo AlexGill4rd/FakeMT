@@ -12,11 +12,12 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
+import static fakemt.fakemt.FakeMT.servername;
+
 public class Alert implements CommandExecutor {
 
     Functions functions = new Functions();
     FakeMT plugin = FakeMT.getPlugin(FakeMT.class);
-    String prefix = functions.color(plugin.getConfig().getString("Prefix"));
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -25,13 +26,13 @@ public class Alert implements CommandExecutor {
                 Player player = (Player) sender;
 
                 if (args.length == 0) {
-                    if (functions.hasPerm(player, "alert.help")) {
+                    if (functions.hasPerm(player, servername + ".alert.help")) {
                         player.sendMessage("§c/Alert <message> om een broadcast te versturen!");
                     }
                 }else{
                     if (args.length == 1) {
                         if (args[0].equalsIgnoreCase("history")) {
-                            if (functions.hasPerm(player, "alert.history")) {
+                            if (functions.hasPerm(player, servername + ".alert.history")) {
                                 player.sendMessage("§6§l§m------=()=------");
                                 if (getBroadcastHistory().isEmpty())
                                     player.sendMessage("§7Geen broadcasts geregistreerd");
@@ -40,7 +41,7 @@ public class Alert implements CommandExecutor {
                             return true;
                         }
                     }
-                    if (functions.hasPerm(player, "alert.send")){
+                    if (functions.hasPerm(player, servername + ".alert.send")){
                         StringBuilder message = new StringBuilder();
                         for (String s : args) message.append(s).append(" ");
                         message = new StringBuilder(ChatColor.translateAlternateColorCodes('&', message.toString()));
@@ -54,7 +55,7 @@ public class Alert implements CommandExecutor {
     }
     private void sendServerBroadcast(String message){
         for (Player online : Bukkit.getServer().getOnlinePlayers()){
-            online.sendMessage(prefix + ChatColor.translateAlternateColorCodes('&', message));
+            online.sendMessage(functions.getServerPrefix() + ChatColor.translateAlternateColorCodes('&', message));
         }
     }
     private void saveBroadcast(String broadcast){

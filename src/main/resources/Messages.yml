@@ -1,22 +1,10 @@
-FoodLore:
-  - "&7Officieel &6FakeMT &7Food"
 DefaultLore:
   - "&8&l&m-------------"
-  - "&7Officieel &6FakeMT &7<category>"
+  - "&7Officieel <servername> &7<category>"
   - "&7Seizoen &6<season> &7<category>"
   - "&8&l&m-------------"
-ArmorLore:
-  - "&8&l&m-------------"
-  - "&7Officieel &6FakeMT &7Armor"
-  - "&7Seizoen &61 &7Armor"
-  - "&8&l&m-------------"
-IllegalLore:
-  - "&8&l&m-------------"
-  - "&7Officieel &6FakeMT &7Illegal"
-  - "&7Dit item is niet toegestaan!"
-  - "&8&l&m-------------"
-DrugLore:
-  - "&7Officieel &6FakeMT &7Drug"
+DefaultLoreSmall:
+  - "&7Officieel <servername> &7<category>"
 Annoying:
   - "e261e848-ddf9-456c-93f7-66ad2a8d7ce7"
 No permissions: "&4Je hebt geen toestemming om deze functie te gebruiken!"
@@ -43,3 +31,5 @@ PetEquipped: "&cJe kan de eigenschappen van een huisdier niet veranderen als dez
 PetRename: "&6Geef de naam in die je aan dit huidier wilt geven!"
 PetRenamed: "&6Je hebt dit huisdier een andere naam gegeven!"
 PetDespawned: "&6Je hebt je huisdier succesvol verborgen!"
+Kit Removed: "&aJe hebt deze kit verwijdert!"
+Plugin Reloaded: "&6Je hebt de plugin succesvol herladen!"

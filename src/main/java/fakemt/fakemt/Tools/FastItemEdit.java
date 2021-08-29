@@ -24,7 +24,7 @@ public class FastItemEdit implements CommandExecutor {
                 Player player = (Player) sender;
                 if (args.length == 0){
                     if (functions.hasPerm(player, "itemdit.help")){
-                        player.sendMessage("§7§l* §6/Itemedit §elore §8[§7<§ccategory§7>§8]                    §7-> Pas de lore van het item aan");
+                        player.sendMessage("§7§l* §6/Itemedit §elore §8[§7<§ccategory§7>§8] §8[§7<§ctype§7>§8]                   §7-> Pas de lore van het item aan");
                         player.sendMessage("§7§l* §6/Itemedit §ename §8[§7<§cdisplayname§7>§8]                §7-> Verander de displayname van een item");
                         player.sendMessage("§7§l* §6/Itemedit §edurability §8[§7<§cdurability§7>/<§crandom§7>/<§cpercentage§7>§8]  §7-> Pas de durability van een item aan");
                     }
@@ -32,7 +32,7 @@ public class FastItemEdit implements CommandExecutor {
                     if (args[0].equalsIgnoreCase("lore")){
                         if (functions.hasPerm(player, "itemedit.lore")) {
                             if (isValidItem(player.getInventory().getItemInMainHand())){
-                                setItemLore(player, player.getInventory().getItemInMainHand(), "Item");
+                                setItemLore(player, player.getInventory().getItemInMainHand(), "Item", 0);
                                 player.sendMessage(functions.getMessage("EditLore"));
                             }else player.sendMessage(functions.getMessage("InvalidItem"));
                         }
@@ -48,7 +48,7 @@ public class FastItemEdit implements CommandExecutor {
                     if (args[0].equalsIgnoreCase("lore")){
                         if (functions.hasPerm(player, "itemedit.lore")) {
                             if (isValidItem(player.getInventory().getItemInMainHand())){
-                                setItemLore(player, player.getInventory().getItemInMainHand(), args[1]);
+                                setItemLore(player, player.getInventory().getItemInMainHand(), args[1], 0);
                                 player.sendMessage(functions.getMessage("EditLore"));
                             }else player.sendMessage(functions.getMessage("InvalidItem"));
                         }
@@ -73,6 +73,19 @@ public class FastItemEdit implements CommandExecutor {
                                 }
                                 else player.sendMessage(functions.getMessage("InvalidNumber"));
                             }else player.sendMessage(functions.getMessage("InvalidItem"));
+                        }
+                    }
+                }else if (args.length == 3){
+                    if (args[0].equalsIgnoreCase("lore")){
+                        if (functions.hasPerm(player, "itemedit.lore")) {
+                            if (functions.isInt(args[2])){
+                                int type = Integer.parseInt(args[2]);
+                                if (isValidItem(player.getInventory().getItemInMainHand())){
+                                    setItemLore(player, player.getInventory().getItemInMainHand(), args[1], type);
+                                    player.sendMessage(functions.getMessage("EditLore"));
+                                }else player.sendMessage(functions.getMessage("InvalidItem"));
+                            }
+
                         }
                     }
                 }
@@ -100,9 +113,15 @@ public class FastItemEdit implements CommandExecutor {
         else mainhand.setDurability((short) (mainhand.getType().getMaxDurability() - durability));
     }
     private void setItemDisplayname(Player player, ItemStack itemStack, String displayname){ player.getInventory().setItemInMainHand(functions.editItemMeta(itemStack, displayname, null)); }
-    private void setItemLore(Player player, ItemStack item, String category){
+    private void setItemLore(Player player, ItemStack item, String category, int type){
         int season = plugin.getConfig().getInt("Season");
-        ArrayList<String> lore = functions.getArray("DefaultLore");
+        ArrayList<String> lore;
+        if (type == 1)
+            lore = functions.getArray("DefaultLore");
+        else if (type == 2)
+            lore = functions.getArray("DefaultLoreSmall");
+        else
+            lore = functions.getArray("DefaultLoreSmall");
         lore.forEach(s -> lore.set(lore.indexOf(s), s.replace("<category>", StringUtils.capitalize(ChatColor.translateAlternateColorCodes('&', category.toLowerCase()))).replace("<season>", String.valueOf(season))));
         player.getInventory().setItemInMainHand(functions.editItemMeta(item, null, lore));
     }

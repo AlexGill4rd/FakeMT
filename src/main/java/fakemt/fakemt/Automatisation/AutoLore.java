@@ -7,6 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import static fakemt.fakemt.FakeMT.servername;
+
 public class AutoLore implements CommandExecutor {
 
     @Override
@@ -20,7 +22,7 @@ public class AutoLore implements CommandExecutor {
                 Functions functions = new Functions();
 
                 if (args.length == 0) {
-                    if (functions.hasPerm(player, "fakemt.autolore")) {
+                    if (functions.hasPerm(player, servername + ".autolore")) {
                         ItemStack[] playerinventory = player.getInventory().getStorageContents();
 
                         for (int i = 0; i < playerinventory.length; i++) {
@@ -30,7 +32,7 @@ public class AutoLore implements CommandExecutor {
                                 if (item.getType().isEdible()) {
                                     player.getInventory().setItem(i, functions.editItemMeta(item, null, functions.getArray("FoodLore")));
                                 } else if (functions.isArmor(item)) {
-                                    player.getInventory().setItem(i, functions.editItemMeta(item, null, functions.getArray("ArmorLore")));
+                                    player.getInventory().setItem(i, functions.editItemMeta(item, null, functions.getDefaultLoreTranslated("Armor")));
                                 }
                             }
                         }
@@ -38,7 +40,7 @@ public class AutoLore implements CommandExecutor {
                     }
                 } else if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("true")) {
-                        if (functions.hasPerm(player, "fakemt.autolore")) {
+                        if (functions.hasPerm(player, servername + ".autolore")) {
                             ItemStack[] playerinventory = player.getInventory().getStorageContents();
 
                             for (int i = 0; i < playerinventory.length; i++) {

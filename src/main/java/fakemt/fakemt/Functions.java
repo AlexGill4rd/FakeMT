@@ -14,9 +14,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static fakemt.fakemt.FakeMT.season;
+import static fakemt.fakemt.FakeMT.servername;
 import static fakemt.fakemt.Head.Configs.*;
 
 public class Functions {
+    FakeMT plugin = FakeMT.getPlugin(FakeMT.class);
 
     public boolean isArmor(ItemStack item) {
         String itemtype = item.getType().toString().toLowerCase();
@@ -57,19 +60,21 @@ public class Functions {
 
         SkullMeta skull_meta = (SkullMeta) skull.getItemMeta();
         skull_meta.setOwningPlayer(Bukkit.getOfflinePlayer(target.getUniqueId()));
-        skull_meta.setDisplayName(title);
-        if (lore != null)skull_meta.setLore(lore);
+        if (title != null) skull_meta.setDisplayName(title);
+        if (lore != null) skull_meta.setLore(lore);
         skull.setItemMeta(skull_meta);
 
         return skull;
     }
-    public ArrayList<String> getAnnoyingPeople(){
-
-        return getArray("Annoying");
-
+    public ArrayList<String> getAnnoyingPeople(){ return getArray("Annoying"); }
+    public ArrayList<String> getDefaultLoreTranslated(String category){
+        int season = plugin.getConfig().getInt("Season");
+        ArrayList<String> lore = getArray("DefaultLore");
+        lore.forEach(s -> lore.set(lore.indexOf(s), s.replace("<category>", StringUtils.capitalize(ChatColor.translateAlternateColorCodes('&', category.toLowerCase()))).replace("<season>", String.valueOf(season))));
+        return lore;
     }
     public String getItemName(ItemStack item){
-        String itemname = "";
+        String itemname;
         ChatColor color = getItemColor(item);
         if (item.hasItemMeta()){
             if (item.getItemMeta().getDisplayName() != null){
@@ -79,15 +84,12 @@ public class Functions {
                     displayname = displayname.substring(0, displayname.indexOf(" -"));
                 }
                 itemname = "§7§l- " + color + StringUtils.capitalize(displayname) + "§7§l -";
-            }else{
+            }else
                 itemname = "§7§l- " + color + StringUtils.capitalize(item.getType().toString().toLowerCase().replace("_", " ")) + "§7§l -";
-            }
-        }else{
+        }else
             itemname = "§7§l- " + color + StringUtils.capitalize(item.getType().toString().toLowerCase().replace("_", " ")) + "§7§l -";
-        }
         return itemname;
     }
-    FakeMT plugin = FakeMT.getPlugin(FakeMT.class);
 
     public String color(String s){
         return ChatColor.translateAlternateColorCodes('&', s);
@@ -104,16 +106,15 @@ public class Functions {
     public ArrayList<String> getArray(String path){
         ArrayList<String> array = new ArrayList<>();
         if (Configs.getCustomConfig1().contains(path)){
-            for (String s : Configs.getCustomConfig1().getStringList(path)){
-                array.add(color(s));
-            }
+            for (String s : Configs.getCustomConfig1().getStringList(path))
+                array.add(color(s).replace("<servername>", servername).replace("<season>", String.valueOf(season)));
             return array;
         }
         return array;
     }
     public ItemStack editItemMeta(ItemStack stack, String displayname, ArrayList<String> lore){
         ItemStack newItem = stack.clone();
-        ItemMeta meta = newItem.getItemMeta();;
+        ItemMeta meta = newItem.getItemMeta();
         if (displayname != null)meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayname));
         if (lore != null)meta.setLore(lore);
         newItem.setItemMeta(meta);
@@ -155,14 +156,6 @@ public class Functions {
         disabled.add(EntityType.GHAST);
         return disabled;
     }
-    public boolean isDouble(String s) {
-        try {
-            Double.parseDouble(s);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
-    }
     public void saveData(){
         try {
             Configs.getCustomConfig2().save(customConfigFile2);
@@ -170,13 +163,7 @@ public class Functions {
             e.printStackTrace();
         }
     }
-    public void savePlayerData(){
-        try {
-            Configs.getCustomConfig3().save(customConfigFile3);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
     public boolean hasJoinedBefore(Player player){
         return Configs.getCustomConfig3().contains("Players." + player.getUniqueId().toString());
     }
@@ -195,11 +182,7 @@ public class Functions {
     }
     public ItemStack createGlass(String title, int color, ArrayList<String> lore){
         ItemStack stack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) color);
-        ItemMeta stack_meta = stack.getItemMeta();
-        stack_meta.setDisplayName(title);
-        if(lore!=null) stack_meta.setLore(lore);
-        stack.setItemMeta(stack_meta);
-        return stack;
+        return editItemMeta(stack, title, lore);
     }
     public ArrayList<String> createArraylist(String... args){
         ArrayList<String> lines = new ArrayList<>();

@@ -13,6 +13,8 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.concurrent.TimeUnit;
 
+import static fakemt.fakemt.FakeMT.servername;
+
 public class CtrlStats implements Listener {
     Functions functions = new Functions();
     @EventHandler
@@ -21,7 +23,7 @@ public class CtrlStats implements Listener {
         Player player = e.getPlayer();
 
         if (e.getRightClicked() instanceof Player){
-            if (functions.hasPerm(player, "fakemt.stats")){
+            if (functions.hasPerm(player, servername + ".stats")){
                 if (player.isSneaking()){
                     Player target = (Player) e.getRightClicked();
                     openControlMenu(player, target);

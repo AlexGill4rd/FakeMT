@@ -53,6 +53,20 @@ public class AutoKit implements CommandExecutor, Listener {
                                 player.sendMessage(functions.getMessage("DoubleKit"));
                             }
                         }
+                    }else if (args[0].equalsIgnoreCase("remove")){
+                        if (functions.hasPerm(player, "kit.remove")){
+                            String kitname = args[1];
+                            if (isValidKit(kitname)){
+                                Configs.getCustomConfig2().set("Kits." + kitname, null);
+                                if (getDefaultKitName() != null){
+                                    if (getDefaultKitName().equalsIgnoreCase(kitname)){
+                                        Configs.getCustomConfig2().set("Kits.default", null);
+                                    }
+                                }
+                                functions.saveData();
+                                player.sendMessage(functions.getMessage("Kit Removed"));
+                            }else player.sendMessage(functions.getMessage("InvalidKit"));
+                        }
                     }
                 }else if (args.length == 3) {
                     if (args[0].equalsIgnoreCase("create")){
@@ -96,6 +110,9 @@ public class AutoKit implements CommandExecutor, Listener {
         }
         String kitname = Configs.getCustomConfig2().getString("Kits.default");
         return Configs.getCustomConfig2().getList("Kits." + kitname).toArray(new ItemStack[0]);
+    }
+    private String getDefaultKitName(){
+        return Configs.getCustomConfig2().contains("Kits.default") ? Configs.getCustomConfig2().getString("Kits.default") : null;
     }
     private ItemStack[] getKitLoot(String kit){
         return Configs.getCustomConfig2().getList("Kits." + kit).toArray(new ItemStack[0]);

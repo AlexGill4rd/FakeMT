@@ -14,6 +14,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import static fakemt.fakemt.FakeMT.servername;
+
 
 public class InformationTab implements CommandExecutor, Listener {
 
@@ -29,7 +31,7 @@ public class InformationTab implements CommandExecutor, Listener {
             if (sender instanceof Player){
                 Player player = (Player) sender;
                 if (args.length == 0){
-                    if (functions.hasPerm(player, "fakemt.links")){
+                    if (functions.hasPerm(player, servername + ".links")){
                         openInfoTab(player);
                     }
                 }

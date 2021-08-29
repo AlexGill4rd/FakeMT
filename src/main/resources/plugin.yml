@@ -18,3 +18,5 @@ commands:
     description: Verzend een broadcast naar de complete server
   pet:
     description: Spawn nu voor een persoon een bepaald huisdier in
+  fakemt:
+    description: Bekijk al de servercommands
