@@ -103,6 +103,14 @@ public class Functions {
         }
         return "§4§lERROR";
     }
+    public String getItemDisplayname(ItemStack item){
+        if (item.hasItemMeta()){
+            if (item.getItemMeta().getDisplayName() != null){
+                return item.getItemMeta().getDisplayName();
+            }
+        }
+        return StringUtils.capitalize(item.getType().toString().toLowerCase().replace("_", " "));
+    }
     public ArrayList<String> getArray(String path){
         ArrayList<String> array = new ArrayList<>();
         if (Configs.getCustomConfig1().contains(path)){
@@ -204,7 +212,9 @@ public class Functions {
         String[] args = stringLoc.split(",");
         if (args.length == 4){
             return new Location(Bukkit.getWorld(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), 0, 0);
-        }return null;
+        }else{
+            return null;
+        }
     }
 
 }

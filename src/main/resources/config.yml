@@ -1,3 +1,5 @@
 Season: 1
 Prefix: "&6&lAlex&e&lNetwork &7>> &f"
-ServerName: "&6FakeMT"
+ServerName: "&6Alex&eNetwork"
+DeathMessage: "&6<player> &7is omgebracht door &c<killer>&7 &7met een &r<wapen>"
+KluisBlok: "RED_GLAZED_TERRACOTTA"

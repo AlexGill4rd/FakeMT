@@ -46,7 +46,7 @@ public class InformationTab implements CommandExecutor, Listener {
             Player player = (Player) e.getWhoClicked();
 
             e.setCancelled(true);
-            if (e.getClickedInventory() instanceof PlayerInventory)return;
+            if (e.getInventory() instanceof PlayerInventory)return;
 
             String itemname = is.getItemMeta().getDisplayName().toLowerCase();
 

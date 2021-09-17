@@ -9,6 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -18,7 +19,7 @@ public class BottleStacker implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e){
         Player player = (Player) e.getWhoClicked();
-        if (e.getInventory().getHolder() instanceof Player){
+        if (e.getClickedInventory() instanceof PlayerInventory){
             if (cooldown.contains(player.getUniqueId()))return;
             cooldown.add(player.getUniqueId());
 

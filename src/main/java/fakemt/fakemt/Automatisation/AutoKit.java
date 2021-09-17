@@ -3,6 +3,8 @@ package fakemt.fakemt.Automatisation;
 import fakemt.fakemt.FakeMT;
 import fakemt.fakemt.Functions;
 import fakemt.fakemt.Head.Configs;
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,39 +15,38 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static fakemt.fakemt.Head.Configs.customConfigFile3;
 
 public class AutoKit implements CommandExecutor, Listener {
 
     Functions functions = new Functions();
-    FakeMT plugin = FakeMT.getPlugin(FakeMT.class);
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
         if (command.getName().equalsIgnoreCase("kit")){
             if (sender instanceof Player) {
-
                 Player player = (Player) sender;
-
                 if (args.length == 1){
                     if (functions.hasPerm(player, "kit.get")){
-                        if (isValidKit(args[0])){
-                            for (ItemStack item : getKitLoot(args[0])){
-                                if (item == null)continue;
-                                player.getInventory().addItem(item);
-                            }
-                            player.sendMessage(functions.getMessage("KitReceived"));
-                        }else{
+                        if (isValidKit(getValidKitname(args[0]))){
+                            if (!getKitLoot(getValidKitname(args[0])).isEmpty()){
+                                for (ItemStack item : getKitLoot(getValidKitname(args[0]))){
+                                    if (item == null)continue;
+                                    player.getInventory().addItem(item);
+                                }
+                                player.sendMessage(functions.getMessage("KitReceived"));
+                            }else
+                                player.sendMessage(functions.getMessage("EmptyKit"));
+                        }else
                             player.sendMessage(functions.getMessage("InvalidKit"));
-                        }
                     }
                 }else if (args.length == 2) {
                     if (args[0].equalsIgnoreCase("create")){
                         if (functions.hasPerm(player, "kit.create")){
                             String kitname = args[1];
                             ItemStack[] loot = player.getInventory().getContents();
-                            if (!Configs.getCustomConfig2().contains("Kits." + kitname)){
+                            if (!isValidKit(getValidKitname(kitname))){
                                 Configs.getCustomConfig2().set("Kits." + kitname, loot);
                                 functions.saveData();
                                 player.sendMessage(functions.getMessage("KitCreated"));
@@ -56,10 +57,10 @@ public class AutoKit implements CommandExecutor, Listener {
                     }else if (args[0].equalsIgnoreCase("remove")){
                         if (functions.hasPerm(player, "kit.remove")){
                             String kitname = args[1];
-                            if (isValidKit(kitname)){
-                                Configs.getCustomConfig2().set("Kits." + kitname, null);
+                            if (isValidKit(getValidKitname(kitname))){
+                                Configs.getCustomConfig2().set("Kits." + getValidKitname(kitname), null);
                                 if (getDefaultKitName() != null){
-                                    if (getDefaultKitName().equalsIgnoreCase(kitname)){
+                                    if (getDefaultKitName().equalsIgnoreCase(getValidKitname(kitname))){
                                         Configs.getCustomConfig2().set("Kits.default", null);
                                     }
                                 }
@@ -74,14 +75,13 @@ public class AutoKit implements CommandExecutor, Listener {
                             if (functions.hasPerm(player, "kit.create.default")){
                                 String kitname = args[1];
                                 ItemStack[] loot = player.getInventory().getContents();
-                                if (!Configs.getCustomConfig2().contains("Kits." + kitname)){
+                                if (!isValidKit(getValidKitname(kitname))){
                                     Configs.getCustomConfig2().set("Kits." + kitname, loot);
                                     Configs.getCustomConfig2().set("Kits.default", kitname);
                                     functions.saveData();
                                     player.sendMessage(functions.getMessage("DefaultKitCreated"));
-                                }else{
+                                }else
                                     player.sendMessage(functions.getMessage("DoubleKit"));
-                                }
                             }
                         }
                     }
@@ -102,7 +102,6 @@ public class AutoKit implements CommandExecutor, Listener {
             saveData();
         }
     }
-
     private ItemStack[] getStarterKitLoot(){
         ItemStack[] loot = new ItemStack[0];
         if (!Configs.getCustomConfig2().contains("Kits.default")){
@@ -114,8 +113,23 @@ public class AutoKit implements CommandExecutor, Listener {
     private String getDefaultKitName(){
         return Configs.getCustomConfig2().contains("Kits.default") ? Configs.getCustomConfig2().getString("Kits.default") : null;
     }
-    private ItemStack[] getKitLoot(String kit){
-        return Configs.getCustomConfig2().getList("Kits." + kit).toArray(new ItemStack[0]);
+    private ArrayList<ItemStack> getKitLoot(String kit){
+        ArrayList<ItemStack> items = new ArrayList<>();
+        if (isValidKit(getValidKitname(kit)))
+            items = (ArrayList<ItemStack>) Configs.getCustomConfig2().getList("Kits." + getValidKitname(kit));
+        return items;
+    }
+    private String getValidKitname(String kitname){
+        if (Configs.getCustomConfig2().contains("Kits." + kitname)){
+            return kitname;
+        }else if (Configs.getCustomConfig2().contains("Kits." + StringUtils.capitalize(kitname.toLowerCase()))){
+            return StringUtils.capitalize(kitname.toLowerCase());
+        }else if (Configs.getCustomConfig2().contains("Kits." + kitname.toLowerCase())){
+            return kitname.toLowerCase();
+        }else if (Configs.getCustomConfig2().contains("Kits." + kitname.toUpperCase())){
+            return kitname.toUpperCase();
+        }
+        return kitname;
     }
     private void saveData(){
         try {

@@ -20,3 +20,7 @@ commands:
     description: Spawn nu voor een persoon een bepaald huisdier in
   fakemt:
     description: Bekijk al de servercommands
+  block:
+    description: Blockeer een speler volledig
+  kluis:
+    description: Bekijk de mogelijke commando's voor de kluizen

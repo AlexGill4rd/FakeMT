@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +31,7 @@ public class InventoryEvents implements Listener {
         if (is == null)return;
         if (e.getView().getTitle().equals("§7§l* §6§lPETS §7§l*")){
             e.setCancelled(true);
-            if (e.getClickedInventory().getHolder() instanceof Player)return;
+            if (e.getClickedInventory() instanceof PlayerInventory)return;
             if (is.getType() == Material.BARRIER){
                 PetData petData = new PetData(player);
                 petData.despawnPets(true);
@@ -57,7 +58,7 @@ public class InventoryEvents implements Listener {
 
         }else if (e.getView().getTitle().equals("§7§l* §5§lPet Editor §7§l*")){
             e.setCancelled(true);
-            if (e.getClickedInventory().getHolder() instanceof Player)return;
+            if (e.getClickedInventory() instanceof PlayerInventory)return;
             if (is.getType() == Material.STAINED_GLASS_PANE || is.getType() == Material.SKULL_ITEM)return;
             String[] split = e.getInventory().getItem(0).getItemMeta().getLore().get(1).split(" ");
             OfflinePlayer target = Bukkit.getOfflinePlayer(ChatColor.stripColor(split[1]));
